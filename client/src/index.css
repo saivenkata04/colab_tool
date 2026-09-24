@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #080A0F;
+  --background-secondary: #0C0F15;
+  --surface: #11151D;
+  --surface-elevated: #151A23;
+  --surface-hover: #1B212D;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-purple: rgba(139, 92, 246, 0.15);
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --primary: #6366F1;
+  --primary-hover: #7C3AED;
+  --primary-bright: #A5B4FC;
+  --success: #10B981;
+  --cyan: #22D3EE;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #38BDF8;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Collaborative Remote Cursor Widgets in Monaco */
+.yRemoteSelection {
+  background-color: rgba(99, 102, 241, 0.18);
+}
+
+.yRemoteSelectionHead {
+  position: absolute;
+  border-left: 2px solid #6366F1;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.yRemoteSelectionHead::after {
+  position: absolute;
+  content: ' ';
+  border: 3px solid #6366F1;
+  border-radius: 2px;
+  left: -4px;
+  top: -4px;
+}
+
+/* Monospace font utility */
+.font-mono-code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Chrome/Safari Autofill Dark Mode Override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #F8FAFC !important;
+  -webkit-box-shadow: 0 0 0px 1000px #080A0F inset !important;
+  box-shadow: 0 0 0px 1000px #080A0F inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #F8FAFC;
+}
