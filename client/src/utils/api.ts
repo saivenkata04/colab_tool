@@ -90,6 +90,22 @@ function handleMockFallback<T>(endpoint: string, options: RequestInit = {}): T {
     return newWs as unknown as T;
   }
 
+  if (endpoint.startsWith('/workspaces/') && !endpoint.includes('/documents') && !endpoint.includes('/members') && method === 'GET') {
+    const wsId = endpoint.split('/')[2];
+    const workspaces = getLocalData<Workspace[]>(STORAGE_KEYS.WORKSPACES, [
+      {
+        id: 'ws-demo-lab',
+        name: 'SyncCode Distributed Lab',
+        description: 'Real-time CRDT & System Architecture Collaboration Studio',
+        ownerId: 'u-demo',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+    ]);
+    const found = workspaces.find((w) => w.id === wsId) || workspaces[0];
+    return found as unknown as T;
+  }
+
   if (endpoint.startsWith('/workspaces/') && endpoint.endsWith('/documents') && method === 'GET') {
     const wsId = endpoint.split('/')[2];
     const allDocs = getLocalData<Document[]>(STORAGE_KEYS.DOCUMENTS, [
