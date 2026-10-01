@@ -13,7 +13,7 @@
     "start": "npm run start --workspace=server",
     "seed": "npm run seed --workspace=server"
   },
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^9.1.2"
   }
 }
