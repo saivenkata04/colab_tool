@@ -110,8 +110,12 @@ function getRoomPresence(documentId: string) {
   }));
 }
 
-export function setupWebSocketServer(port: number = 8080): WebSocketServer {
-  const wss = new WebSocketServer({ port });
+import type { Server as HttpServer } from 'http';
+
+export function setupWebSocketServer(serverOrPort: HttpServer | number = 8080): WebSocketServer {
+  const wss = typeof serverOrPort === 'number'
+    ? new WebSocketServer({ port: serverOrPort })
+    : new WebSocketServer({ server: serverOrPort });
 
   wss.on('connection', async (ws: WebSocket, req) => {
     // Parse query parameters
@@ -324,6 +328,10 @@ export function setupWebSocketServer(port: number = 8080): WebSocketServer {
     });
   });
 
-  console.log(`⚡ WebSocket Collaboration Server running on ws://localhost:${port}`);
+  if (typeof serverOrPort === 'number') {
+    console.log(`⚡ WebSocket Collaboration Server running on ws://localhost:${serverOrPort}`);
+  } else {
+    console.log(`⚡ WebSocket Collaboration Server attached to HTTP server`);
+  }
   return wss;
 }

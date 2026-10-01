@@ -49,7 +49,9 @@ export class YjsWebSocketProvider {
       wsUrl ||
       (import.meta.env.VITE_WS_URL as string) ||
       (typeof window !== 'undefined'
-        ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:8080`
+        ? (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+            ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`
+            : 'ws://localhost:8080')
         : 'ws://localhost:8080');
 
     this.url = `${computedWsUrl}?token=${encodeURIComponent(token)}&workspaceId=${encodeURIComponent(workspaceId)}&documentId=${encodeURIComponent(documentId)}`;

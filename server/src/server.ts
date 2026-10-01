@@ -51,10 +51,23 @@ if (fs.existsSync(clientDist)) {
   });
 }
 
-// Start REST server
-app.listen(PORT, () => {
-  console.log(`⚡ REST API Server listening on http://localhost:${PORT}`);
-});
+import http from 'http';
 
-// Start WebSocket server
-setupWebSocketServer(WS_PORT);
+const httpServer = http.createServer(app);
+
+// Setup WebSocket server on HTTP server (allows single-port cloud hosts like Render to serve API, WebSockets, and UI)
+setupWebSocketServer(httpServer);
+
+// If running locally with separate WS_PORT, also keep dedicated WS port open for backwards compatibility
+if (WS_PORT !== PORT && !process.env.RENDER) {
+  try {
+    setupWebSocketServer(WS_PORT);
+  } catch (e) {
+    // Port may already be in use
+  }
+}
+
+// Start combined HTTP + WebSocket server
+httpServer.listen(PORT, () => {
+  console.log(`⚡ REST API & WebSocket Server listening on http://localhost:${PORT}`);
+});
